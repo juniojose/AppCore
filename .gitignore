@@ -1,0 +1,98 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+
+# Ambiente Virtual
+.venv/
+venv/
+env/
+ENV/
+
+# Arquivos de Configuração Sensíveis
+.env
+*.env
+*.env.*
+secrets/
+*.key
+*.pem
+
+# Bancos de Dados Locais
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+
+# Migrações de Banco de Dados
+migrations/versions/*
+!migrations/__init__.py
+!migrations/env.py
+!migrations/script.py.mako
+
+# Arquivos de Cache
+*.cache
+.pytest_cache/
+.coverage
+coverage.xml
+*.cover
+*.log
+*.log.*
+
+# Ferramentas de Desenvolvimento
+.dmypy.json
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+*.prof
+
+# Linting e Formatação
+.flake8
+.pylintrc
+.black
+
+# Node.js / React
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+build/
+dist/
+*.tsbuildinfo
+
+# Arquivos Estáticos Gerados
+appCore/backend/static/dist/
+appCore/backend/static/build/
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.#*
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de Testes
+tests/__pycache__/
+tests/*.pyc
+tests/coverage/
+
+# Outros
+*.bak
+*.tmp
+*.temp
+*.swp
+*.swo
