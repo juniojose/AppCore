@@ -8,7 +8,7 @@ DEFAULT_HOST_DEV = "127.0.0.1"
 DEFAULT_HOST_PROD = "0.0.0.0"
 DEFAULT_PORT = 5000
 VALID_ENVIRONMENTS = {"development", "production"}
-LOG_FILE = "appcore.log"
+LOG_FILE = "logs/appcore.log"
 MAX_LOG_SIZE = 10 * 1024 * 1024  # 10 MB
 BACKUP_COUNT = 5
 

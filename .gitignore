@@ -44,6 +44,8 @@ coverage.xml
 *.cover
 *.log
 *.log.*
+logs/*.log
+logs/*.log.*
 
 # Ferramentas de Desenvolvimento
 .dmypy.json
