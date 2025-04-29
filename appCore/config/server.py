@@ -2,13 +2,17 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
+from dotenv import load_dotenv
+
+# Carrega variáveis de ambiente
+load_dotenv()
 
 # Configuração de constantes
 DEFAULT_HOST_DEV = "127.0.0.1"
 DEFAULT_HOST_PROD = "0.0.0.0"
 DEFAULT_PORT = 5000
 VALID_ENVIRONMENTS = {"development", "production"}
-LOG_FILE = "logs/appcore.log"
+LOG_FILE = os.path.join("logs", "appcore.log")
 MAX_LOG_SIZE = 10 * 1024 * 1024  # 10 MB
 BACKUP_COUNT = 5
 
@@ -27,7 +31,12 @@ def setup_logging(environment: str) -> logging.Logger:
     # Valida o ambiente
     environment = validate_environment(environment)
 
-    logger = logging.getLogger(__name__)
+    # Cria o diretório de logs se não existir
+    log_dir = os.path.dirname(LOG_FILE)
+    if log_dir and not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    logger = logging.getLogger("appCore")
     
     # Define o nível de logging baseado no ambiente
     log_level = logging.DEBUG if environment == "development" else logging.INFO
@@ -82,7 +91,7 @@ def run_server(app: Flask, environment: str) -> None:
     Raises:
         Exception: Se houver erro ao executar o servidor.
     """
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger("appCore")
 
     # Valida o ambiente
     environment = validate_environment(environment)

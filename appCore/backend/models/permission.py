@@ -1,12 +1,5 @@
 from appCore.backend import db
 
-# Tabela associativa para relação N:N entre User e Permission
-user_permissions = db.Table(
-    "user_permissions",
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id"), primary_key=True),
-    db.Column("permission_id", db.Integer, db.ForeignKey("permissions.id"), primary_key=True)
-)
-
 class Permission(db.Model):
     """Modelo para permissões de acesso."""
     __tablename__ = "permissions"
@@ -17,9 +10,9 @@ class Permission(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     # Relacionamento
-    users = db.relationship(
-        "User",
-        secondary=user_permissions,
+    profiles = db.relationship(
+        "Profile",
+        secondary="profile_permissions",
         back_populates="permissions"
     )
 

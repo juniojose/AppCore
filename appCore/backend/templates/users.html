@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if action == "login" %}Login{% elif action == "register" %}Registrar{% else %}Usuários{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {% if action == "login" %}Login{% elif action == "register" %}Registrar{% else %}Lista de Usuários{% endif %}
+    </h1>
+
+    {% if action == "login" or action == "register" %}
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {% if action == "register" %}
+                <div>
+                    {{ form.username.label }}<br>
+                    {{ form.username() }}<br>
+                    {% for error in form.username.errors %}
+                        <span class="error">{{ error }}</span><br>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.profile_id.label }}<br>
+                    {{ form.profile_id() }}<br>
+                    {% for error in form.profile_id.errors %}
+                        <span class="error">{{ error }}</span><br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div>
+                {{ form.email.label }}<br>
+                {{ form.email() }}<br>
+                {% for error in form.email.errors %}
+                    <span class="error">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.password.label }}<br>
+                {{ form.password() }}<br>
+                {% for error in form.password.errors %}
+                    <span class="error">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.submit() }}
+            </div>
+        </form>
+    {% elif action == "list" %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Perfil</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.profile.name if user.profile else "Nenhum" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

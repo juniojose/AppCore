@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SelectField, SubmitField
 from wtforms.validators import DataRequired, Email, Length
 from appCore.backend import db, bcrypt
-from appCore.backend.models.user import User  # Assumindo modelo User
+from appCore.backend.models.user import User
+from appCore.backend.models.profile import Profile
 
 users_bp = Blueprint("users", __name__)
 
@@ -19,6 +20,7 @@ class RegisterForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=3, max=50)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired(), Length(min=6)])
+    profile_id = SelectField("Perfil", coerce=int, validators=[DataRequired()])
     submit = SubmitField("Register")
 
 @users_bp.route("/login", methods=["GET", "POST"])
@@ -53,13 +55,21 @@ def register():
         return redirect(url_for("core.index"))
     
     form = RegisterForm()
+    form.profile_id.choices = [(p.id, p.name) for p in Profile.query.all()]
+    
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=hashed_password,
+            profile_id=form.profile_id.data
+        )
         db.session.add(user)
         db.session.commit()
         flash("Conta criada com sucesso! Faça login.", "success")
         return redirect(url_for("users.login"))
+    
     return render_template("miniapps/users.html", form=form, action="register")
 
 @users_bp.route("/list")

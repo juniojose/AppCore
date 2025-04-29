@@ -9,15 +9,11 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False, index=True)
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password = db.Column(db.String(255), nullable=False)
+    profile_id = db.Column(db.Integer, db.ForeignKey("profiles.id"), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     # Relacionamentos
-    profile = db.relationship("Profile", back_populates="user", uselist=False)
-    permissions = db.relationship(
-        "Permission",
-        secondary="user_permissions",
-        back_populates="users"
-    )
+    profile = db.relationship("Profile", back_populates="users")
     theme = db.relationship("Theme", back_populates="user", uselist=False)
 
     def __repr__(self):
@@ -40,5 +36,7 @@ class User(UserMixin, db.Model):
         return str(self.id)
 
     def has_permission(self, permission_name: str) -> bool:
-        """Verifica se o usuário tem uma permissão específica."""
-        return any(permission.name == permission_name for permission in self.permissions)
+        """Verifica se o usuário tem uma permissão específica via perfil."""
+        if not self.profile:
+            return False
+        return any(permission.name == permission_name for permission in self.profile.permissions)
