@@ -112,7 +112,7 @@ const Main = () => {
 const Footer = () => {
     return (
         <footer className="custom-footer text-center mt-auto py-3">
-            © 2025 FzPy
+            © 2025 Junio José
         </footer>
     );
 };
