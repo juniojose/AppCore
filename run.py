@@ -7,7 +7,7 @@ Suporta ambientes de desenvolvimento e produção.
 import os
 import logging
 from flask import Flask, abort, request, redirect
-from app import create_app
+from appCore import create_app
 from config import DevelopmentConfig, ProductionConfig, get_config
 from dotenv import load_dotenv
 from datetime import timedelta
