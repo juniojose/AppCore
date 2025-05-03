@@ -1,0 +1,63 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+.custom-header {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 0;
+}
+
+.top-bar {
+    padding: 0 20px;
+}
+
+.logo-img {
+    max-height: 30px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #212529;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    padding: 8px 15px;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #495057;
+}
+
+/* Forçar visibilidade dos menus em telas grandes */
+@media (min-width: 992px) {
+    .navbar-collapse {
+        display: flex !important;
+    }
+}
+
+/* Garantir que o toggler funcione sem conflitos */
+.navbar-toggler {
+    border: none;
+    padding: 5px;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Main */
+main {
+    padding: 20px;
+}
+
+/* Footer */
+.custom-footer {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 0;
+}
