@@ -61,6 +61,13 @@ def create_app(env_name=None):
     # Inicializa extensões
     initialize_extensions(app)
 
+    # Inicializa banco de dados
+    with app.app_context():
+        db.create_all()
+
+    # Registra blueprints
+    register_blueprints(app)
+
     # Configura manipulador de erro 403
     @app.errorhandler(403)
     def forbidden_error(error):
@@ -80,11 +87,13 @@ def initialize_extensions(app):
     login_manager.login_message_category = "warning"
     login_manager.session_protection = "strong"
 
-    # Configura carregador de usuário (assumindo modelo Usuario futuro)
-    try:
-        from app.models import Usuario
-        @login_manager.user_loader
-        def load_user(user_id):
-            return Usuario.query.get(int(user_id))
-    except ImportError:
-        logging.getLogger(__name__).warning("Modelo Usuario não encontrado. Carregador de usuário não configurado.")
+    # Configura carregador de usuário
+    from .models import Usuario
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Usuario.query.get(int(user_id))
+
+def register_blueprints(app):
+    """Registra os blueprints da aplicação."""
+    from .blueprints.main import main_bp
+    app.register_blueprint(main_bp, url_prefix='/')
